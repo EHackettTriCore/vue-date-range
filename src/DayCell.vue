@@ -1,7 +1,7 @@
 <template>
-  <span class="ayou-day-cell" @click.stop.prevent="handleDayClick()" :title="showLunar && lunarText">
-    <div class="solar" :class="{'selected': isSelected, 'passive': day.isPassive, 'in-range': isInRange}">{{day.dayMoment.date()}}</div>
-    <div class="lunar" :class="{'passive': day.isPassive, 'festival': isFestival}" v-if="showLunar">
+  <span class="ayou-day-cell" @click.stop.prevent="handleDayClick()" :title="showLunar && lunarText" :class="{'is-lunar': showLunar, 'is-selected': isSelected, 'is-passive': day.isPassive, 'is-in-range': isInRange, 'is-festival': isFestival}">
+    <div class="solar">{{day.dayMoment.date()}}</div>
+    <div class="lunar" v-if="showLunar">
       {{lunarText}}
     </div>
   </span>
@@ -82,36 +82,38 @@
       height: 2.4rem;
       line-height: 2.4rem;
       font-size: 1rem;
-      &.selected {
-        border-radius: 50%;
-        background-color: @primary;
-        color: #fff;
-      }
-      &.in-range {
-        border-radius: 50%;
-        background-color: @primary-light;
-        color: #fff;
-      }
-      &.passive {
-        &.in-range {
-          opacity: 0.4;
-        }
-        &.selected {
-          opacity: 0.4;
-        }
-      }
     }
     .lunar {
       font-size: 0.8rem;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      &.festival {
-        color: @secondary;
-        &.passive {
-          opacity: 0.4;
-        }
+    }
+    &.is-lunar {
+      
+    }
+    &.is-selected {
+      .solar {
+        border-radius: 50%;
+        background-color: @primary;
+        color: #fff;
       }
+    }
+    &.is-passive {
+      opacity: 0.4;
+    }
+    &.is-in-range {
+      .solar {
+        border-radius: 50%;
+        background-color: @primary-light;
+        color: #fff;
+      }
+    }
+    &:is-festival {
+      .lunar {
+        color: @secondary;
+      }
+
     }
   }
 </style>
